@@ -6,3 +6,5 @@ export interface IControllerRoute {
 	method: keyof Pick<Router, 'get' | 'post' | 'delete' | 'patch' | 'put'>;
 	// method2: 'get' | 'post' | 'delete' | 'patch' | 'put';
 }
+
+export type ExpressReturnType = Response<any, Record<string, any>>;

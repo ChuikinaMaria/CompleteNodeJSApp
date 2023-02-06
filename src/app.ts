@@ -5,10 +5,9 @@ import { ILogger } from './logger/logger.interface';
 import { LoggerService } from './logger/logger.service';
 //import { userRouter } from './users/users';
 import { UserController } from './users/users.controller';
-import {injectable, inject} from 'inversify'
+import { injectable, inject } from 'inversify';
 import { TYPES } from './types';
 import 'reflect-metadata';
-
 
 @injectable()
 export class App {
@@ -21,26 +20,22 @@ export class App {
 		@inject(TYPES.UserController) private userController: UserController,
 		@inject(TYPES.ExeptionFilter) private exeptionFilter: ExeptionFilter,
 	) {
-
 		this.app = express();
 		this.port = 8000;
 	}
 
-	useRoutes() {
+	useRoutes(): void {
 		this.app.use('/users', this.userController.router);
 	}
 
-	useExeptionFilters() {
+	useExeptionFilters(): void {
 		this.app.use(this.exeptionFilter.catch.bind(this.exeptionFilter));
-
 	}
 
-	public async init() {
+	public async init(): Promise<void> {
 		this.useRoutes();
 		this.useExeptionFilters();
 		this.server = this.app.listen(this.port);
 		this.logger.log(`Сервер запущен на http://localhost:${this.port}`);
-		
-
 	}
 }
