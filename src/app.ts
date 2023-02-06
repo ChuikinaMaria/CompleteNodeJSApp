@@ -1,6 +1,7 @@
 import express, { Express } from 'express';
 import { Server } from 'http';
 import { ExeptionFilter } from './errors/exeption.filter';
+import { ILogger } from './logger/logger.interface';
 import { LoggerService } from './logger/logger.service';
 //import { userRouter } from './users/users';
 import { UserController } from './users/users.controller';
@@ -10,13 +11,13 @@ export class App {
 	app: Express;
 	server: Server;
 	port: number;
-	logger: LoggerService;
+	logger: ILogger;
 	userController: UserController;
 	exeptionFilter: ExeptionFilter;
 
 
 	constructor(
-		logger: LoggerService,
+		logger: ILogger,
 		userController: UserController,
 		exeptionFilter: ExeptionFilter) {
 
