@@ -3,7 +3,6 @@ import { Server } from 'http';
 import { ExeptionFilter } from './errors/exeption.filter';
 import { ILogger } from './logger/logger.interface';
 import { LoggerService } from './logger/logger.service';
-//import { userRouter } from './users/users';
 import { UserController } from './users/users.controller';
 import { injectable, inject } from 'inversify';
 import { TYPES } from './types';
@@ -21,7 +20,11 @@ export class App {
 		@inject(TYPES.ExeptionFilter) private exeptionFilter: ExeptionFilter,
 	) {
 		this.app = express();
-		this.port = 8000;
+		this.port = 8001;
+	}
+
+	useMiddleware(): void {
+		this.app.use(express.json());
 	}
 
 	useRoutes(): void {
@@ -33,6 +36,7 @@ export class App {
 	}
 
 	public async init(): Promise<void> {
+		this.useMiddleware();
 		this.useRoutes();
 		this.useExeptionFilters();
 		this.server = this.app.listen(this.port);
